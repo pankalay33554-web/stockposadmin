@@ -1,607 +1,715 @@
 import { useState } from "react";
-import { useNavigate, Outlet } from "react-router-dom";
+import { useNavigate, Outlet } from "react-router";
 
-import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
-import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
-import StoreRoundedIcon from "@mui/icons-material/StoreRounded";
-import PointOfSaleRoundedIcon from "@mui/icons-material/PointOfSaleRounded";
-import ImageRoundedIcon from "@mui/icons-material/ImageRounded";
-import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
-import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
-import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
-import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
+import {
+  ArrowBack,
+  Person,
+  StorefrontOutlined,
+  CameraAltOutlined,
+  CheckCircle,
+  RadioButtonUnchecked,
+  InfoOutlined,
+  KeyboardArrowDown,
+  Close,
+  Error,
+  WarningAmberOutlined,
+  ArrowForward,
+  Inventory2Outlined,
+} from "@mui/icons-material";
 
 import "./createpos.css";
 
-const POS_PLANS = {
+const categories = [
+  "Bakery",
+  "Restaurant",
+  "Cafe",
+  "Fashion",
+  "Grocery",
+  "Electronics",
+  "Beauty",
+  "Other",
+];
+
+const tiers = {
   offline: {
     name: "Offline",
     price: 0,
-    suffix: "/mo",
     description:
       "Essential tools for back-office management, inventory tracking, and standard reporting.",
   },
-
   online: {
     name: "Online",
     price: 20,
-    suffix: "/mo",
     description:
-      "Full digital workflow synchronization, remote order management, and web dashboard access.",
+      "Full digital storefront synchronization, remote order management, and web dashboard access.",
   },
-
   extra: {
     name: "Extra",
     price: 15,
-    suffix: "/mo per device",
     description:
       "Advanced AI analytics, multi-location support, and priority 24/7 technical assistance.",
   },
 };
 
-const BUSINESS_CATEGORIES = [
-  "Restaurant",
-  "Cafe",
-  "Retail Shop",
-  "Grocery",
-  "Clothing",
-  "Pharmacy",
-  "Other",
-];
-
-export default function CreatePOS() {
+const CreatePOS = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     fullName: "",
-    phoneNumber: "",
-    email: "",
-    password: "",
     shopName: "",
     shopAddress: "",
-    shopContactNumber: "",
-    businessCategory: "",
+    contactNumber: "",
+    category: "",
+    tier: "offline",
+    extra: false,
+    logo: null,
   });
 
-  const [selectedPlan, setSelectedPlan] = useState("offline");
+  const [preview, setPreview] = useState("");
 
-  const [showPassword, setShowPassword] = useState(false);
+  const [errors, setErrors] = useState({});
 
-  const [categoryOpen, setCategoryOpen] = useState(false);
+  const [popup, setPopup] = useState({
+    show: false,
+    type: "success",
+    title: "",
+    message: "",
+  });
 
-  const [logoPreview, setLogoPreview] = useState("");
+  const showPopup = (type, title, message) => {
+    setPopup({
+      show: true,
+      type,
+      title,
+      message,
+    });
+  };
 
-  const [error, setError] = useState("");
+  const closePopup = () => {
+    setPopup({
+      show: false,
+      type: "success",
+      title: "",
+      message: "",
+    });
+  };
 
-  const selectedPlanData = POS_PLANS[selectedPlan];
+  const handleChange = (e) => {
+    const { name, value } = e.target;
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-
-    setFormData((previous) => ({
-      ...previous,
+    setFormData((prev) => ({
+      ...prev,
       [name]: value,
     }));
 
-    setError("");
+    setErrors((prev) => ({
+      ...prev,
+      [name]: "",
+    }));
   };
 
-  const handleCategorySelect = (category) => {
-    setFormData((previous) => ({
-      ...previous,
-      businessCategory: category,
+  const handleTierChange = (tier) => {
+    setFormData((prev) => ({
+      ...prev,
+      tier,
+      extra: tier === "online" ? prev.extra : false,
     }));
 
-    setCategoryOpen(false);
-    setError("");
+    setErrors((prev) => ({
+      ...prev,
+      tier: "",
+    }));
   };
 
-  const handleLogoChange = (event) => {
-    const file = event.target.files?.[0];
+  const handleExtraChange = () => {
+    if (formData.tier !== "online") return;
 
-    if (!file) {
+    setFormData((prev) => ({
+      ...prev,
+      extra: !prev.extra,
+    }));
+  };
+
+  const handleLogoUpload = (e) => {
+    const file = e.target.files?.[0];
+
+    if (!file) return;
+
+    const validTypes = ["image/png", "image/jpeg", "image/jpg"];
+
+    if (!validTypes.includes(file.type)) {
+      showPopup("error", "Invalid Image", "Please upload a PNG or JPG image.");
       return;
     }
 
     if (file.size > 5 * 1024 * 1024) {
-      setError("Logo image must be smaller than 5MB.");
+      showPopup(
+        "error",
+        "Image Too Large",
+        "Logo image must be smaller than 5MB.",
+      );
       return;
     }
+
+    setFormData((prev) => ({
+      ...prev,
+      logo: file,
+    }));
+
+    setErrors((prev) => ({
+      ...prev,
+      logo: "",
+    }));
 
     const imageUrl = URL.createObjectURL(file);
-
-    setLogoPreview(imageUrl);
-    setError("");
+    setPreview(imageUrl);
   };
 
-  const handlePlanSelect = (plan) => {
-    setSelectedPlan(plan);
-    setError("");
-  };
+  const validate = () => {
+    const newErrors = {};
 
-  const handleCreatePOS = () => {
     if (!formData.fullName.trim()) {
-      setError("Please enter full name.");
-      return;
-    }
-
-    if (!formData.phoneNumber.trim()) {
-      setError("Please enter phone number.");
-      return;
-    }
-
-    if (!formData.email.trim()) {
-      setError("Please enter login email address.");
-      return;
-    }
-
-    if (!formData.email.includes("@")) {
-      setError("Please enter a valid email address.");
-      return;
-    }
-
-    if (!formData.password.trim()) {
-      setError("Please enter password.");
-      return;
+      newErrors.fullName = "Please select or enter client name.";
     }
 
     if (!formData.shopName.trim()) {
-      setError("Please enter shop name.");
-      return;
+      newErrors.shopName = "Shop name is required.";
+    } else if (formData.shopName.trim().length < 2) {
+      newErrors.shopName = "Shop name must be at least 2 characters.";
     }
 
     if (!formData.shopAddress.trim()) {
-      setError("Please enter shop address.");
-      return;
+      newErrors.shopAddress = "Shop address is required.";
     }
 
-    if (!formData.shopContactNumber.trim()) {
-      setError("Please enter shop contact number.");
-      return;
+    if (!formData.contactNumber.trim()) {
+      newErrors.contactNumber = "Contact number is required.";
+    } else if (!/^[+]?[\d\s()-]{7,20}$/.test(formData.contactNumber.trim())) {
+      newErrors.contactNumber = "Please enter a valid contact number.";
     }
 
-    if (!formData.businessCategory) {
-      setError("Please select business category.");
-      return;
+    if (!formData.category) {
+      newErrors.category = "Please select a business category.";
+    }
+    if (!formData.tier) {
+      newErrors.tier = "Please select a POS tier.";
     }
 
-    const posData = {
-      client: {
-        fullName: formData.fullName.trim(),
-        phoneNumber: formData.phoneNumber.trim(),
-        email: formData.email.trim(),
-        password: formData.password,
-      },
+    setErrors(newErrors);
 
-      shop: {
-        name: formData.shopName.trim(),
-        address: formData.shopAddress.trim(),
-        contactNumber: formData.shopContactNumber.trim(),
-        category: formData.businessCategory,
-        logo: logoPreview,
-      },
-
-      plan: {
-        id: selectedPlan,
-        name: selectedPlanData.name,
-        price: selectedPlanData.price,
-      },
-    };
-
-    console.log("CREATE POS FLOW:", posData);
-
-    if (selectedPlan === "offline") {
-      navigate("/pos/offlinea");
-      return;
-    }
-
-    if (selectedPlan === "online") {
-      navigate("/pos/online");
-      return;
-    }
-
-    if (selectedPlan === "extra") {
-      navigate("/pos/extra");
-    }
+    return Object.keys(newErrors).length === 0;
   };
 
-  const renderCheck = (plan) => {
-    if (selectedPlan !== plan) {
-      return null;
+  const calculateTotal = () => {
+    let total = tiers[formData.tier]?.price || 0;
+
+    if (formData.tier === "online" && formData.extra) {
+      total += tiers.extra.price;
     }
 
-    return <CheckRoundedIcon className="tierCheckIcon" />;
+    return total;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const isValid = validate();
+
+    if (!isValid) {
+      showPopup(
+        "error",
+        "Incomplete Information",
+        "Please check the highlighted fields and complete all required information.",
+      );
+      return;
+    }
+
+    showPopup(
+      "success",
+      "POS Account Created",
+      `${formData.shopName} has been successfully registered as a ${formData.tier} POS account.`,
+    );
+  };
+
+  const handleCancel = () => {
+    showPopup(
+      "warning",
+      "Cancel Registration?",
+      "Your entered information will not be saved. Are you sure you want to cancel?",
+    );
+  };
+
+  const handlePopupAction = () => {
+    if (popup.type === "warning") {
+      closePopup();
+
+      setFormData({
+        fullName: "",
+        shopName: "",
+        shopAddress: "",
+        contactNumber: "",
+        category: "",
+        tier: "offline",
+        extra: false,
+        logo: null,
+      });
+
+      setPreview("");
+      setErrors({});
+    } else {
+      closePopup();
+    }
   };
 
   return (
-    <div className="posPage">
-      <div className="posHeader">
+    <div className="create-pos-page">
+      <div className="create-pos-topbar">
         <button
           type="button"
-          className="backButton"
+          className="create-pos-back-button"
           onClick={() => navigate(-1)}
         >
-          <ArrowBackRoundedIcon className="backIcon" />
+          <ArrowBack />
         </button>
 
-        <span className="headerTitle">Create New POS</span>
+        <span className="create-pos-top-title">Create New POS</span>
       </div>
 
-      <div className="posContent">
-        <div className="introSection">
-          <h1 className="pageTitle">Register New Shop</h1>
+      <main className="create-pos-container">
+        <div className="create-pos-heading">
+          <h1 className="create-pos-main-title">Register New Shop</h1>
 
-          <p className="pageSubtitle">
+          <p className="create-pos-subtitle">
             Enter shop details to set up a new point-of-sale system.
           </p>
         </div>
 
-        <div className="posCard">
-          <div className="formSection">
-            <div className="sectionHeading">
-              <PersonRoundedIcon className="sectionIcon" />
+        <form className="create-pos-card" onSubmit={handleSubmit} noValidate>
+          <section className="create-pos-section">
+            <div className="create-pos-section-title">
+              <Person className="create-pos-section-icon" />
 
-              <span className="sectionTitle">
-                Client &amp; Account Information
-              </span>
+              <span>Client &amp; Account Information</span>
             </div>
 
-            <div className="accountGrid">
-              <div className="fieldGroup">
-                <label className="fieldLabel">Full Name</label>
+            <div className="create-pos-field">
+              <label className="create-pos-label">Full Name</label>
 
+              <div
+                className={`create-pos-select-wrapper ${
+                  errors.fullName ? "create-pos-input-error" : ""
+                }`}
+              >
                 <input
-                  className="fieldControl"
+                  className="create-pos-input"
                   type="text"
                   name="fullName"
+                  placeholder="Enter client name"
                   value={formData.fullName}
-                  onChange={handleInputChange}
-                  placeholder="e.g. Sarah Jenkins"
+                  onChange={handleChange}
                 />
+
+                <KeyboardArrowDown className="create-pos-select-icon" />
               </div>
 
-              <div className="fieldGroup">
-                <label className="fieldLabel">Phone Number</label>
-
-                <input
-                  className="fieldControl"
-                  type="tel"
-                  name="phoneNumber"
-                  value={formData.phoneNumber}
-                  onChange={handleInputChange}
-                  placeholder="+1 (555) 000-0000"
-                />
-              </div>
-
-              <div className="fieldGroup">
-                <label className="fieldLabel">Login Email Address</label>
-
-                <input
-                  className="fieldControl"
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  placeholder="sarah@business.com"
-                  autoComplete="off"
-                />
-              </div>
-
-              <div className="fieldGroup">
-                <label className="fieldLabel">Password</label>
-                <div className="passwordField">
-                  <input
-                    className="fieldControl passwordControl"
-                    type={showPassword ? "text" : "password"}
-                    name="password"
-                    value={formData.password}
-                    onChange={handleInputChange}
-                    placeholder="••••••••••"
-                    autoComplete="new-password"
-                  />
-
-                  <button
-                    type="button"
-                    className="passwordToggle"
-                    onClick={() => setShowPassword((previous) => !previous)}
-                  >
-                    {showPassword ? (
-                      <VisibilityOffRoundedIcon className="passwordIcon" />
-                    ) : (
-                      <VisibilityRoundedIcon className="passwordIcon" />
-                    )}
-                  </button>
-                </div>
-              </div>
+              {errors.fullName && (
+                <span className="create-pos-error-text">{errors.fullName}</span>
+              )}
             </div>
-          </div>
+          </section>
 
-          <div className="formSection">
-            <div className="sectionHeading">
-              <StoreRoundedIcon className="sectionIcon" />
+          <section className="create-pos-section">
+            <div className="create-pos-section-title">
+              <StorefrontOutlined className="create-pos-section-icon" />
 
-              <span className="sectionTitle">Shop &amp; Business Details</span>
+              <span>Shop &amp; Business Details</span>
             </div>
 
-            <div className="shopLayout">
-              <div className="shopFields">
-                <div className="fieldGroup">
-                  <label className="fieldLabel">Shop Name</label>
-
+            <div className="create-pos-business-grid">
+              <div className="create-pos-business-fields">
+                <div className="create-pos-field">
+                  <label className="create-pos-label">Shop Name</label>
                   <input
-                    className="fieldControl"
+                    className={`create-pos-input ${
+                      errors.shopName ? "create-pos-input-error" : ""
+                    }`}
                     type="text"
                     name="shopName"
-                    value={formData.shopName}
-                    onChange={handleInputChange}
                     placeholder="The Artisan Bakery"
+                    value={formData.shopName}
+                    onChange={handleChange}
                   />
+
+                  {errors.shopName && (
+                    <span className="create-pos-error-text">
+                      {errors.shopName}
+                    </span>
+                  )}
                 </div>
 
-                <div className="fieldGroup shopAddressField">
-                  <label className="fieldLabel">Shop Address</label>
+                <div className="create-pos-field">
+                  <label className="create-pos-label">Shop Address</label>
 
                   <input
-                    className="fieldControl"
+                    className={`create-pos-input ${
+                      errors.shopAddress ? "create-pos-input-error" : ""
+                    }`}
                     type="text"
                     name="shopAddress"
+                    placeholder="123 Commerce Blvd, Suite 100"
                     value={formData.shopAddress}
-                    onChange={handleInputChange}
-                    placeholder="123 Commerce Blvd, Suite 200"
+                    onChange={handleChange}
                   />
+
+                  {errors.shopAddress && (
+                    <span className="create-pos-error-text">
+                      {errors.shopAddress}
+                    </span>
+                  )}
                 </div>
 
-                <div className="shopBottomGrid">
-                  <div className="fieldGroup">
-                    <label className="fieldLabel">Shop Contact Number</label>
+                <div className="create-pos-two-column">
+                  <div className="create-pos-field">
+                    <label className="create-pos-label">
+                      Shop Contact Number
+                    </label>
 
                     <input
-                      className="fieldControl"
+                      className={`create-pos-input ${
+                        errors.contactNumber ? "create-pos-input-error" : ""
+                      }`}
                       type="tel"
-                      name="shopContactNumber"
-                      value={formData.shopContactNumber}
-                      onChange={handleInputChange}
+                      name="contactNumber"
                       placeholder="(555) 123-4567"
+                      value={formData.contactNumber}
+                      onChange={handleChange}
                     />
+
+                    {errors.contactNumber && (
+                      <span className="create-pos-error-text">
+                        {errors.contactNumber}
+                      </span>
+                    )}
                   </div>
 
-                  <div className="fieldGroup">
-                    <label className="fieldLabel">Business Category</label>
+                  <div className="create-pos-field">
+                    <label className="create-pos-label">
+                      Business Category
+                    </label>
 
-                    <div className="categoryWrapper">
-                      <button
-                        type="button"
-                        className="categoryButton"
-                        onClick={() => setCategoryOpen((previous) => !previous)}
+                    <div
+                      className={`create-pos-select-wrapper ${
+                        errors.category ? "create-pos-input-error" : ""
+                      }`}
+                    >
+                      <select
+                        className="create-pos-select"
+                        name="category"
+                        value={formData.category}
+                        onChange={handleChange}
                       >
-                        <span
-                          className={
-                            formData.businessCategory
-                              ? "categoryValue"
-                              : "categoryPlaceholder"
-                          }
-                        >
-                          {formData.businessCategory || "Select Category"}
-                        </span>
+                        <option value="">Select Category</option>
 
-                        <KeyboardArrowDownRoundedIcon className="categoryArrow" />
-                      </button>
+                        {categories.map((category) => (
+                          <option key={category} value={category}>
+                            {category}
+                          </option>
+                        ))}
+                      </select>
 
-                      {categoryOpen && (
-                        <div className="categoryMenu">
-                          {BUSINESS_CATEGORIES.map((category) => (
-                            <button
-                              type="button"
-                              className="categoryOption"
-                              key={category}
-                              onClick={() => handleCategorySelect(category)}
-                            >
-                              {category}
-                            </button>
-                          ))}
-                        </div>
-                      )}
+                      <KeyboardArrowDown className="create-pos-select-icon" />
                     </div>
+                    {errors.category && (
+                      <span className="create-pos-error-text">
+                        {errors.category}
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
 
-              <div className="logoArea">
-                <label className="fieldLabel">Shop Logo/Photo</label>
+              <div className="create-pos-logo-area">
+                <label className="create-pos-label">Shop Logo/Photo</label>
 
-                <label className="uploadBox">
-                  {logoPreview ? (
-                    <img
-                      className="logoPreview"
-                      src={logoPreview}
-                      alt="Shop logo preview"
-                    />
+                <label
+                  className={`create-pos-upload-box ${
+                    preview ? "create-pos-upload-preview" : ""
+                  } ${errors.logo ? "create-pos-input-error" : ""}`}
+                >
+                  <input
+                    className="create-pos-file-input"
+                    type="file"
+                    accept="image/png,image/jpeg,image/jpg"
+                    onChange={handleLogoUpload}
+                  />
+
+                  {preview ? (
+                    <div className="create-pos-preview-wrapper">
+                      <img
+                        className="create-pos-preview-image"
+                        src={preview}
+                        alt="Shop logo preview"
+                      />
+
+                      <div className="create-pos-preview-overlay">
+                        <CameraAltOutlined />
+                        <span>Change Image</span>
+                      </div>
+                    </div>
                   ) : (
-                    <>
-                      <div className="uploadIconBox">
-                        <ImageRoundedIcon className="uploadIcon" />
+                    <div className="create-pos-upload-content">
+                      <div className="create-pos-upload-icon">
+                        <CameraAltOutlined />
                       </div>
 
-                      <span className="uploadTitle">Upload Logo/Photo</span>
+                      <span className="create-pos-upload-title">
+                        Upload Logo/Photo
+                      </span>
 
-                      <span className="uploadHint">PNG, JPG up to 5MB</span>
-                    </>
+                      <span className="create-pos-upload-info">
+                        PNG, JPG up to 5MB
+                      </span>
+                    </div>
                   )}
-
-                  <input
-                    className="fileInput"
-                    type="file"
-                    accept=".png,.jpg,.jpeg"
-                    onChange={handleLogoChange}
-                  />
                 </label>
               </div>
             </div>
-          </div>
+          </section>
 
-          <div className="formSection tierSection">
-            <div className="sectionHeading">
-              <PointOfSaleRoundedIcon className="sectionIcon" />
+          <section className="create-pos-section create-pos-tier-section">
+            <div className="create-pos-section-title">
+              <Inventory2Outlined className="create-pos-section-icon" />
 
-              <span className="sectionTitle">
-                Select POS Tier &amp; Add-ons
-              </span>
+              <span>Select POS Tier &amp; Add-ons</span>
             </div>
 
-            <div className="tierGrid">
-              <button
-                type="button"
-                className={`tierCard tierOffline ${
-                  selectedPlan === "offline" ? "tierSelected" : ""
+            <div className="create-pos-tier-grid">
+              <div
+                className={`create-pos-tier-card create-pos-tier-offline ${
+                  formData.tier === "offline" ? "create-pos-tier-active" : ""
                 }`}
-                onClick={() => handlePlanSelect("offline")}
+                onClick={() => handleTierChange("offline")}
               >
-                <div className="tierTop">
-                  <div className="tierNameRow">
-                    <span
-                      className={`tierRadio ${
-                        selectedPlan === "offline" ? "tierRadioSelected" : ""
-                      }`}
-                    >
-                      {renderCheck("offline")}
-                    </span>
+                <div className="create-pos-tier-header">
+                  <div className="create-pos-tier-name">
+                    {formData.tier === "offline" ? (
+                      <CheckCircle className="create-pos-tier-check" />
+                    ) : (
+                      <RadioButtonUnchecked className="create-pos-tier-radio" />
+                    )}
 
-                    <span className="tierName">Offline</span>
+                    <span>Offline</span>
                   </div>
 
                   <button
-                    onClick={() => navigate("offlinefeatures")}
-                    className="msh"
+                    type="button"
+                    className="create-pos-info-button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate("offlinefeatures");
+                    }}
                   >
-                    <InfoOutlinedIcon className="tierInfoIcon" />
+                    <InfoOutlined />
                   </button>
                   <Outlet />
                 </div>
 
-                <span className="tierDescription">
-                  Essential tools for back-office management, inventory
-                  tracking, and standard reporting.
-                </span>
+                <p className="create-pos-tier-description">
+                  {tiers.offline.description}
+                </p>
 
-                <div className="tierPrice">
-                  <span className="priceValue">$0</span>
-
-                  <span className="priceSuffix">/mo</span>
+                <div className="create-pos-price">
+                  <span>$0</span>
+                  <small>/mo</small>
                 </div>
-              </button>
+              </div>
 
-              <button
-                type="button"
-                className={`tierCard tierOnline ${
-                  selectedPlan === "online" ? "tierSelected" : ""
+              <div
+                className={`create-pos-tier-card create-pos-tier-online ${
+                  formData.tier === "online" ? "create-pos-tier-active" : ""
                 }`}
-                onClick={() => handlePlanSelect("online")}
+                onClick={() => handleTierChange("online")}
               >
-                <div className="tierTop">
-                  <div className="tierNameRow">
-                    <span
-                      className={`tierRadio ${
-                        selectedPlan === "online" ? "tierRadioSelected" : ""
-                      }`}
-                    >
-                      {renderCheck("online")}
-                    </span>
+                <div className="create-pos-tier-header">
+                  <div className="create-pos-tier-name">
+                    {formData.tier === "online" ? (
+                      <CheckCircle className="create-pos-tier-check create-pos-online-check" />
+                    ) : (
+                      <RadioButtonUnchecked className="create-pos-tier-radio" />
+                    )}
 
-                    <span className="tierName">Online</span>
+                    <span>Online</span>
                   </div>
 
-                  <InfoOutlinedIcon className="tierInfoIcon" />
+                  <button
+                    type="button"
+                    className="create-pos-info-button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate("onlinefeatures");
+                    }}
+                  >
+                    <InfoOutlined />
+                  </button>
+                  <Outlet />
                 </div>
 
-                <span className="tierDescription">
-                  Full digital workflow synchronization, remote order
-                  management, and web dashboard access.
-                </span>
+                <p className="create-pos-tier-description">
+                  {tiers.online.description}
+                </p>
 
-                <div className="tierPrice">
-                  <span className="priceValue">$20</span>
-
-                  <span className="priceSuffix">/mo</span>
+                <div className="create-pos-price">
+                  <span>$20</span>
+                  <small>/mo</small>
                 </div>
-              </button>
+              </div>
 
-              <button
-                type="button"
-                className={`tierCard tierExtra ${
-                  selectedPlan === "extra" ? "tierSelected" : ""
+              <div
+                className={`create-pos-tier-card create-pos-tier-extra ${
+                  formData.extra ? "create-pos-tier-extra-active" : ""
+                } ${
+                  formData.tier !== "online" ? "create-pos-tier-disabled" : ""
                 }`}
-                onClick={() => handlePlanSelect("extra")}
+                onClick={handleExtraChange}
               >
-                <div className="tierTop">
-                  <div className="tierNameRow">
-                    <span
-                      className={`tierRadio tierSquare ${
-                        selectedPlan === "extra" ? "tierRadioSelected" : ""
-                      }`}
-                    >
-                      {renderCheck("extra")}
-                    </span>
+                <div className="create-pos-tier-header">
+                  <div className="create-pos-tier-name">
+                    {formData.extra ? (
+                      <CheckCircle className="create-pos-tier-check create-pos-extra-check" />
+                    ) : (
+                      <RadioButtonUnchecked className="create-pos-tier-radio" />
+                    )}
 
-                    <span className="tierName">Extra</span>
+                    <span>Extra</span>
                   </div>
 
-                  <InfoOutlinedIcon className="tierInfoIcon" />
+                  <button
+                    type="button"
+                    className="create-pos-info-button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+
+                      navigate("extrafeatures");
+                    }}
+                  >
+                    <InfoOutlined />
+                    <Outlet />
+                  </button>
                 </div>
 
-                <span className="tierDescription">
-                  Advanced analytics, multi-location support, and priority 24/7
-                  technical assistance.
-                </span>
+                <p className="create-pos-tier-description">
+                  {tiers.extra.description}
+                </p>
 
-                <div className="tierPrice">
-                  <span className="priceValue">$15</span>
-
-                  <span className="priceSuffix">/mo per device</span>
+                <div className="create-pos-price">
+                  <span>$15</span>
+                  <small>/mo per device</small>
                 </div>
-              </button>
-            </div>
-          </div>
 
-          {error && (
-            <div className="errorArea">
-              <span className="errorMessage">{error}</span>
-            </div>
-          )}
-
-          <div className="formFooter">
-            <div className="totalBox">
-              <span className="totalLabel">TOTAL MONTHLY AMOUNT</span>
-              <div className="totalRow">
-                <span className="totalValue">${selectedPlanData.price}</span>
-
-                <span className="totalCurrency">USD / month</span>
+                {formData.tier !== "online" && (
+                  <div className="create-pos-disabled-label">
+                    Available with Online
+                  </div>
+                )}
               </div>
             </div>
 
-            <div className="footerActions">
+            {errors.tier && (
+              <span className="create-pos-error-text create-pos-tier-error">
+                {errors.tier}
+              </span>
+            )}
+          </section>
+
+          <div className="create-pos-summary">
+            <div className="create-pos-total">
+              <span className="create-pos-total-label">
+                TOTAL MONTHLY AMOUNT
+              </span>
+
+              <div className="create-pos-total-price">
+                <span>${calculateTotal()}</span>
+
+                <small>USD / month</small>
+              </div>
+            </div>
+            <div className="create-pos-actions">
               <button
                 type="button"
-                className="cancelButton"
-                onClick={() => navigate(-1)}
+                className="create-pos-cancel-button"
+                onClick={handleCancel}
               >
                 Cancel
               </button>
 
-              <button
-                type="button"
-                className="createButton"
-                onClick={handleCreatePOS}
-              >
-                <span className="createButtonText">Create POS Account</span>
-
-                <ArrowForwardRoundedIcon className="createIcon" />
+              <button type="submit" className="create-pos-submit-button">
+                <span>Create POS Account</span>
+                <ArrowForward />
               </button>
             </div>
           </div>
+        </form>
+      </main>
+
+      {popup.show && (
+        <div className="create-pos-popup-backdrop">
+          <div className="create-pos-popup">
+            <button
+              type="button"
+              className="create-pos-popup-close"
+              onClick={closePopup}
+            >
+              <Close />
+            </button>
+
+            <div
+              className={`create-pos-popup-icon create-pos-popup-${popup.type}`}
+            >
+              {popup.type === "success" && <CheckCircle />}
+
+              {popup.type === "error" && <Error />}
+
+              {popup.type === "warning" && <WarningAmberOutlined />}
+            </div>
+
+            <h3 className="create-pos-popup-title">{popup.title}</h3>
+
+            <p className="create-pos-popup-message">{popup.message}</p>
+
+            <div className="create-pos-popup-actions">
+              {popup.type === "warning" ? (
+                <>
+                  <button
+                    type="button"
+                    className="create-pos-popup-cancel"
+                    onClick={closePopup}
+                  >
+                    Keep Editing
+                  </button>
+
+                  <button
+                    type="button"
+                    className="create-pos-popup-confirm"
+                    onClick={handlePopupAction}
+                  >
+                    Yes, Cancel
+                  </button>
+                </>
+              ) : (
+                <button
+                  type="button"
+                  className="create-pos-popup-confirm"
+                  onClick={handlePopupAction}
+                >
+                  Continue
+                </button>
+              )}
+            </div>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
-}
+};
+
+export default CreatePOS;

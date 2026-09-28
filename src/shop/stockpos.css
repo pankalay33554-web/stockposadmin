@@ -1,0 +1,1759 @@
+.storeManagementPage {
+  width: 100%;
+  inset: 0;
+  min-height: 100vh;
+  background: #f8f9fc;
+  color: #202124;
+  font-family: "Inter", "Poppins", Arial, sans-serif;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.storeManagementPage *,
+.storeManagementPage *::before,
+.storeManagementPage *::after {
+  box-sizing: border-box;
+}
+
+.storeManagementTopBar {
+  width: 100%;
+  min-height: 92px;
+  padding: 0 58px;
+  background: #ffffff;
+  border-bottom: 1px solid #ececf3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  position: relative;
+  z-index: 10;
+}
+
+.storeManagementBrand {
+  display: flex;
+  align-items: center;
+}
+
+.storeManagementBrandTitle {
+  font-size: 31px;
+  line-height: 1.2;
+  font-weight: 800;
+  letter-spacing: -0.8px;
+  color: #1f2027;
+}
+
+.storeManagementTopActions {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.storeManagementCreateUserButton {
+  min-height: 53px;
+  padding: 0 25px;
+  border: 0;
+  border-radius: 9px;
+  background: linear-gradient(135deg, #4235d7, #3279e8);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 700;
+  box-shadow: 0 9px 22px rgba(64, 72, 216, 0.22);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    filter 0.25s ease;
+}
+
+.storeManagementCreateUserButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(64, 72, 216, 0.32);
+  filter: brightness(1.04);
+}
+
+.storeManagementCreateUserButton:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+.storeManagementButtonIcon {
+  font-size: 21px !important;
+}
+
+.storeManagementButtonText {
+  white-space: nowrap;
+}
+
+.storeManagementManagerButton {
+  min-height: 58px;
+  padding: 4px 0 4px 20px;
+  border: 0;
+  border-left: 1px solid #dedee8;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  text-align: left;
+  transition: transform 0.25s ease;
+}
+
+.storeManagementManagerButton:hover {
+  transform: translateY(-2px);
+}
+
+.storeManagementManagerAvatar {
+  width: 43px;
+  height: 43px;
+  border: 1px solid #dcd9f2;
+  border-radius: 50%;
+  background: #f2efff;
+  color: #4036a8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.storeManagementManagerAvatar svg {
+  font-size: 25px;
+}
+
+.storeManagementManagerInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.storeManagementManagerRole {
+  color: #5f606a;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.storeManagementManagerName {
+  color: #24242c;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.storeManagementContent {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 39px 58px 70px;
+}
+
+.storeManagementHeadingRow {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 30px;
+  margin-bottom: 42px;
+}
+
+.storeManagementHeadingBlock {
+  min-width: 0;
+}
+
+.storeManagementPageTitle {
+  margin: 0 0 6px;
+  color: #4037aa;
+  font-size: 42px;
+  line-height: 1.15;
+  font-weight: 800;
+  letter-spacing: -1.3px;
+}
+
+.storeManagementPageSubtitle {
+  margin: 0;
+  color: #666873;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.storeManagementCreatePosButton {
+  min-height: 52px;
+  margin-top: 3px;
+  padding: 0 20px;
+  border: 2px solid #7674ba;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #41409a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 700;
+  box-shadow: 0 5px 15px rgba(70, 65, 160, 0.07);
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.storeManagementCreatePosButton svg {
+  font-size: 20px;
+}
+
+.storeManagementCreatePosButton:hover {
+  background: #4840b4;
+  color: #ffffff;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(72, 64, 180, 0.18);
+}
+
+.storeManagementToolbar {
+  width: 100%;
+  min-height: 75px;
+  padding: 12px 14px;
+  margin-bottom: 42px;
+  border: 1px solid #e7e6ef;
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+  box-shadow: 0 9px 30px rgba(39, 36, 93, 0.045);
+}
+
+.storeManagementTabs {
+  min-height: 51px;
+  padding: 4px;
+  background: #f5f3ff;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.storeManagementTab {
+  min-width: 94px;
+  height: 43px;
+  padding: 0 17px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: #555566;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+
+.storeManagementTab svg {
+  font-size: 18px;
+}
+
+.storeManagementTab:hover {
+  color: #4037b0;
+  transform: translateY(-1px);
+}
+
+.storeManagementTabActive {
+  background: linear-gradient(135deg, #4435db, #377be9);
+  color: #ffffff;
+  box-shadow: 0 6px 15px rgba(61, 66, 211, 0.25);
+}
+
+.storeManagementTabActive:hover {
+  color: #ffffff;
+}
+
+.storeManagementTabDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #7b7b84;
+}
+
+.storeManagementTabActive .storeManagementTabDot {
+  background: #ffffff;
+}
+
+.storeManagementSearchBox {
+  width: min(465px, 42%);
+  height: 48px;
+  padding: 0 14px;
+  border: 1px solid #dedee8;
+  border-radius: 9px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  position: relative;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.storeManagementSearchBox:focus-within {
+  border-color: #615bd2;
+  box-shadow: 0 0 0 4px rgba(84, 76, 203, 0.08);
+}
+
+.storeManagementSearchIcon {
+  color: #5e606c;
+  font-size: 22px !important;
+  flex-shrink: 0;
+}
+
+.storeManagementSearchInput {
+  width: 100%;
+  height: 100%;
+  padding: 0 37px 0 12px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #252630;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.storeManagementSearchInput::placeholder {
+  color: #a2a2aa;
+}
+
+.storeManagementSearchLoader {
+  width: 27px;
+  height: 27px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 10px;
+}
+
+.storeManagementSpinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #dddcef;
+  border-top-color: #4c45c4;
+  border-radius: 50%;
+  animation: storeManagementSpin 0.75s linear infinite;
+}
+
+.storeManagementSearchClear {
+  width: 27px;
+  height: 27px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #f1f1f5;
+  color: #62636c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.storeManagementSearchClear svg {
+  font-size: 17px;
+}
+
+.storeManagementSearchClear:hover {
+  background: #e4e2f4;
+  color: #443cba;
+  transform: rotate(90deg);
+}
+
+.storeManagementShopGrid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 27px;
+}
+
+.storeManagementShopCard {
+  min-width: 0;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #e7e7ed;
+  border-radius: 14px;
+  box-shadow: 0 9px 28px rgba(36, 34, 81, 0.065);
+  opacity: 0;
+  animation: storeManagementCardAppear 0.65s ease forwards;
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.storeManagementShopCard:hover {
+  transform: translateY(-8px);
+  border-color: #dcd9f5;
+  box-shadow: 0 20px 42px rgba(46, 42, 111, 0.13);
+}
+
+.storeManagementShopImageWrapper {
+  width: 100%;
+  height: 208px;
+  overflow: hidden;
+  background: #eeeef3;
+  position: relative;
+}
+
+.storeManagementShopImage {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition:
+    transform 0.55s ease,
+    filter 0.55s ease;
+}
+
+.storeManagementShopCard:hover .storeManagementShopImage {
+  transform: scale(1.055);
+  filter: brightness(1.025);
+}
+
+.storeManagementShopStatus {
+  min-height: 28px;
+  padding: 0 11px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  position: absolute;
+  left: 13px;
+  bottom: 13px;
+  font-size: 11px;
+  font-weight: 700;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+}
+
+.storeManagementShopStatusOnline {
+  background: rgba(221, 252, 239, 0.94);
+  color: #16825c;
+}
+
+.storeManagementShopStatusOffline {
+  background: rgba(231, 241, 255, 0.95);
+  color: #3575bb;
+}
+
+.storeManagementStatusDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: storeManagementStatusPulse 1.8s infinite;
+}
+
+.storeManagementShopBody {
+  padding: 21px 23px 23px;
+}
+
+.storeManagementShopName {
+  margin: 0 0 8px;
+  color: #24252b;
+  font-size: 22px;
+  line-height: 1.25;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+}
+
+.storeManagementShopLocation {
+  min-height: 22px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #74757e;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.storeManagementShopLocation svg {
+  color: #777782;
+  font-size: 17px;
+}
+
+.storeManagementShopTags {
+  min-height: 29px;
+  margin-bottom: 19px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.storeManagementVersionTag,
+.storeManagementExtraTag {
+  min-height: 27px;
+  padding: 0 11px;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.storeManagementVersionOffline {
+  background: #e9f2ff;
+  color: #3973b7;
+  border: 1px solid #d7e8fb;
+}
+
+.storeManagementVersionOnline {
+  background: #e1f9ee;
+  color: #188b62;
+  border: 1px solid #d1f0e4;
+}
+
+.storeManagementExtraTag {
+  background: #fff8dc;
+  color: #a27a23;
+  border: 1px solid #f5eac1;
+}
+
+.storeManagementShopActions {
+  width: 100%;
+  margin-bottom: 12px;
+  display: grid;
+  grid-template-columns: 1.35fr 1fr 1fr;
+  gap: 7px;
+}
+
+.storeManagementShopActionButton {
+  min-height: 40px;
+  padding: 0 8px;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 700;
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    background 0.22s ease;
+}
+
+.storeManagementShopActionButton svg {
+  font-size: 17px;
+}
+
+.storeManagementShopActionButton:hover {
+  transform: translateY(-2px);
+}
+
+.storeManagementShopActionPrimary {
+  border: 0;
+  background: linear-gradient(135deg, #4335d7, #377be7);
+  color: #ffffff;
+  box-shadow: 0 6px 14px rgba(65, 58, 199, 0.2);
+}
+
+.storeManagementShopActionPrimary:hover {
+  box-shadow: 0 9px 19px rgba(65, 58, 199, 0.28);
+}
+
+.storeManagementShopActionSecondary {
+  border: 1px solid #c9c7e2;
+  background: #ffffff;
+  color: #49449a;
+}
+
+.storeManagementShopActionSecondary:hover {
+  background: #f5f3ff;
+}
+
+.storeManagementShopActionDelete {
+  border: 1px solid #f0cece;
+  background: #fffafa;
+  color: #c84d4d;
+}
+
+.storeManagementShopActionDelete:hover {
+  background: #fff0f0;
+  border-color: #e9abab;
+}
+
+.storeManagementViewButton {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 13px;
+  border: 1.5px solid #a9a6ca;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #4b489e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  position: relative;
+  overflow: hidden;
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.storeManagementViewButton::before {
+  width: 0;
+  height: 100%;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: linear-gradient(135deg, #4436d5, #397be7);
+  z-index: 0;
+  transition: width 0.35s ease;
+}
+
+.storeManagementViewButton span,
+.storeManagementViewButton svg {
+  position: relative;
+  z-index: 1;
+}
+
+.storeManagementViewButton svg {
+  font-size: 20px;
+  transition: transform 0.25s ease;
+}
+
+.storeManagementViewButton:hover {
+  color: #ffffff;
+  border-color: #4436d5;
+  transform: translateY(-2px);
+  box-shadow: 0 9px 20px rgba(65, 59, 193, 0.18);
+}
+
+.storeManagementViewButton:hover::before {
+  width: 100%;
+}
+
+.storeManagementViewButton:hover svg {
+  transform: translateX(4px);
+}
+
+.storeManagementSkeletonGrid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 27px;
+}
+
+.storeManagementSkeletonCard {
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #e9e9ef;
+  border-radius: 14px;
+  box-shadow: 0 9px 28px rgba(36, 34, 81, 0.045);
+}
+
+.storeManagementSkeletonImage {
+  width: 100%;
+  height: 208px;
+  position: relative;
+  overflow: hidden;
+  background: #e5e5e5;
+}
+
+.storeManagementSkeletonBody {
+  padding: 21px 23px 23px;
+}
+
+.storeManagementSkeletonLine,
+.storeManagementSkeletonTag,
+.storeManagementSkeletonButton {
+  position: relative;
+  overflow: hidden;
+  background: #e5e5e5;
+}
+
+.storeManagementSkeletonLineTitle {
+  width: 72%;
+  height: 23px;
+  margin-bottom: 13px;
+  border-radius: 7px;
+}
+
+.storeManagementSkeletonLineLocation {
+  width: 58%;
+  height: 14px;
+  margin-bottom: 18px;
+  border-radius: 6px;
+}
+
+.storeManagementSkeletonTag {
+  width: 105px;
+  height: 27px;
+  margin-bottom: 17px;
+  border-radius: 20px;
+}
+
+.storeManagementSkeletonButton {
+  width: 100%;
+  height: 44px;
+  border-radius: 8px;
+}
+
+.storeManagementSkeletonShimmer {
+  width: 45%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: -55%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.18) 28%,
+    rgba(255, 255, 255, 0.82) 50%,
+    rgba(255, 255, 255, 0.18) 72%,
+    transparent 100%
+  );
+  animation: storeManagementSkeletonShimmer 1.35s infinite;
+}
+
+.storeManagementEmptyState {
+  grid-column: 1 / -1;
+  min-height: 330px;
+  padding: 40px;
+  border: 1px dashed #d5d4e3;
+  border-radius: 16px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  animation: storeManagementFadeUp 0.45s ease;
+}
+
+.storeManagementEmptyIcon {
+  width: 65px;
+  height: 65px;
+  margin-bottom: 17px;
+  border-radius: 50%;
+  background: #f0efff;
+  color: #5149bd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.storeManagementEmptyIcon svg {
+  font-size: 31px;
+}
+
+.storeManagementEmptyTitle {
+  margin-bottom: 7px;
+  color: #282934;
+  font-size: 21px;
+  font-weight: 800;
+}
+
+.storeManagementEmptyText {
+  max-width: 430px;
+  margin-bottom: 19px;
+  color: #7b7c86;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.storeManagementEmptyResetButton {
+  min-height: 42px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 8px;
+  background: #4638cf;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.storeManagementEmptyResetButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(70, 56, 207, 0.22);
+}
+
+.storeManagementOverlay,
+.storeManagementModalOverlay {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(22, 24, 35, 0.47);
+  backdrop-filter: blur(3px);
+  animation: storeManagementOverlayIn 0.25s ease;
+}
+
+.storeManagementOverlayClose {
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+}
+
+.storeManagementProfileDrawer {
+  width: min(475px, 92vw);
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #ffffff;
+  box-shadow: -15px 0 50px rgba(24, 23, 62, 0.16);
+  display: flex;
+  flex-direction: column;
+  animation: storeManagementDrawerFromRight 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.storeManagementDrawerHeader {
+  min-height: 89px;
+  padding: 0 25px;
+  border-bottom: 1px solid #e8e7ed;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.storeManagementDrawerTitle {
+  color: #4038a5;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+}
+
+.storeManagementDrawerClose {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: #72737d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.storeManagementDrawerClose svg {
+  font-size: 24px;
+}
+
+.storeManagementDrawerClose:hover {
+  background: #f1f0f8;
+  color: #4038a5;
+  transform: rotate(90deg);
+}
+
+.storeManagementDrawerContent {
+  flex: 1;
+  min-height: 0;
+  padding: 28px 25px;
+  overflow-y: auto;
+}
+
+.storeManagementProfileHero {
+  margin-bottom: 34px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.storeManagementProfileAvatar {
+  width: 105px;
+  height: 105px;
+  margin-bottom: 13px;
+  border: 2px solid #e1def3;
+  border-radius: 50%;
+  background: #f4f1ff;
+  color: #4035b1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 25px rgba(67, 55, 176, 0.09);
+}
+
+.storeManagementProfileAvatar svg {
+  font-size: 55px;
+}
+
+.storeManagementProfileName {
+  margin-bottom: 7px;
+  color: #25262d;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.storeManagementRoleBadge {
+  min-height: 27px;
+  padding: 0 13px;
+  border-radius: 20px;
+  background: #ecebff;
+  color: #4941ad;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.storeManagementProfileForm {
+  display: flex;
+  flex-direction: column;
+  gap: 21px;
+}
+
+.storeManagementField {
+  width: 100%;
+}
+
+.storeManagementFieldLabel {
+  display: block;
+  margin-bottom: 8px;
+  color: #777985;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.storeManagementInputWrapper {
+  width: 100%;
+  height: 53px;
+  border: 1px solid #e0dfe7;
+  border-radius: 9px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  position: relative;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.storeManagementInputWrapper:focus-within {
+  border-color: #625bd0;
+  box-shadow: 0 0 0 4px rgba(84, 76, 203, 0.08);
+}
+
+.storeManagementInputError {
+  border-color: #dc6464;
+}
+
+.storeManagementInputError:focus-within {
+  border-color: #dc6464;
+  box-shadow: 0 0 0 4px rgba(220, 100, 100, 0.08);
+}
+
+.storeManagementProfileInput {
+  width: 100%;
+  height: 100%;
+  padding: 0 47px 0 14px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #2c2d35;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.storeManagementInputIcon {
+  margin-right: 13px;
+  color: #878894;
+  font-size: 20px !important;
+  flex-shrink: 0;
+}
+
+.storeManagementPasswordActions {
+  display: flex;
+  align-items: center;
+}
+
+.storeManagementFieldIconButton {
+  width: 32px;
+  height: 34px;
+  margin-right: 2px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #83848e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.storeManagementFieldIconButton svg {
+  font-size: 20px;
+}
+
+.storeManagementFieldError {
+  margin-top: 7px;
+  color: #d24f4f;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.storeManagementFieldError svg {
+  font-size: 15px;
+}
+
+.storeManagementDrawerFooter {
+  padding: 20px 25px 25px;
+  border-top: 1px solid #ededf1;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  flex-shrink: 0;
+}
+
+.storeManagementSaveButton,
+.storeManagementLogoutButton {
+  width: 100%;
+  min-height: 51px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 800;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+.storeManagementSaveButton {
+  border: 0;
+  background: linear-gradient(135deg, #4535d8, #397be8);
+  color: #ffffff;
+  box-shadow: 0 8px 20px rgba(66, 55, 211, 0.2);
+}
+
+.storeManagementSaveButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(66, 55, 211, 0.28);
+}
+
+.storeManagementLogoutButton {
+  border: 1px solid #d9d8e1;
+  background: #ffffff;
+  color: #373741;
+}
+
+.storeManagementLogoutButton:hover {
+  border-color: #c96464;
+  background: #fff8f8;
+  color: #c74d4d;
+  transform: translateY(-2px);
+}
+
+.storeManagementModalOverlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 25px;
+}
+
+.storeManagementDetailsModal {
+  width: min(600px, 94vw);
+  max-height: 92vh;
+  overflow: hidden auto;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 25px 70px rgba(23, 22, 67, 0.25);
+  animation: storeManagementModalPop 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.storeManagementDetailsHeader {
+  min-height: 72px;
+  padding: 0 23px;
+  border-bottom: 1px solid #ecebf0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.storeManagementDetailsTitle {
+  color: #4038a5;
+  font-size: 21px;
+  font-weight: 800;
+}
+
+.storeManagementDetailsImageWrapper {
+  width: 100%;
+  height: 255px;
+  overflow: hidden;
+  background: #eeeef3;
+}
+
+.storeManagementDetailsImage {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.storeManagementDetailsBody {
+  padding: 25px;
+}
+
+.storeManagementDetailsName {
+  margin-bottom: 9px;
+  color: #24252c;
+  font-size: 25px;
+  font-weight: 800;
+}
+
+.storeManagementDetailsLocation {
+  margin-bottom: 19px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #777883;
+  font-size: 14px;
+}
+
+.storeManagementDetailsLocation svg {
+  font-size: 19px;
+}
+
+.storeManagementDetailsTags {
+  margin-bottom: 22px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.storeManagementDetailsRow {
+  min-height: 55px;
+  padding: 0 15px;
+  border-bottom: 1px solid #eeeef2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.storeManagementDetailsLabel {
+  color: #858691;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.storeManagementDetailsValue {
+  color: #292a32;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.storeManagementActiveStatus {
+  color: #16845e;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.storeManagementActiveStatus svg {
+  font-size: 17px;
+}
+
+.storeManagementDetailsActions {
+  padding: 0 25px 25px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.storeManagementDetailsActionButton {
+  min-height: 48px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 800;
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+.storeManagementDetailsActionButton:hover {
+  transform: translateY(-2px);
+}
+
+.storeManagementDetailsActionPrimary {
+  border: 0;
+  background: linear-gradient(135deg, #4435d6, #397be8);
+  color: #ffffff;
+  box-shadow: 0 8px 18px rgba(66, 55, 208, 0.2);
+}
+
+.storeManagementDetailsActionSecondary {
+  border: 1px solid #cbc9df;
+  background: #ffffff;
+  color: #48449c;
+}
+
+.storeManagementDeleteModal {
+  width: min(450px, 94vw);
+  padding: 34px 30px 29px;
+  border-radius: 18px;
+  background: #ffffff;
+  text-align: center;
+  box-shadow: 0 25px 70px rgba(23, 22, 67, 0.25);
+  animation: storeManagementModalPop 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.storeManagementDeleteIcon {
+  width: 68px;
+  height: 68px;
+  margin: 0 auto 17px;
+  border-radius: 50%;
+  background: #fff0f0;
+  color: #d45252;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.storeManagementDeleteIcon svg {
+  font-size: 32px;
+}
+
+.storeManagementDeleteTitle {
+  margin-bottom: 9px;
+  color: #292a31;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.storeManagementDeleteText {
+  margin: 0 auto 25px;
+  max-width: 350px;
+  color: #777883;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.storeManagementDeleteText strong {
+  color: #34353e;
+  font-weight: 800;
+}
+
+.storeManagementDeleteText span {
+  display: block;
+}
+
+.storeManagementDeleteActions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.storeManagementCancelButton,
+.storeManagementDeleteConfirmButton {
+  min-height: 48px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 800;
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    background 0.22s ease;
+}
+
+.storeManagementCancelButton {
+  border: 1px solid #d8d7df;
+  background: #ffffff;
+  color: #4b4c55;
+}
+
+.storeManagementCancelButton:hover {
+  background: #f7f7fa;
+  transform: translateY(-2px);
+}
+
+.storeManagementDeleteConfirmButton {
+  border: 0;
+  background: #d75252;
+  color: #ffffff;
+  box-shadow: 0 7px 17px rgba(210, 74, 74, 0.18);
+}
+
+.storeManagementDeleteConfirmButton:hover {
+  background: #c84444;
+  transform: translateY(-2px);
+  box-shadow: 0 11px 22px rgba(210, 74, 74, 0.25);
+}
+
+.storeManagementDeleteConfirmButton svg {
+  font-size: 18px;
+}
+
+.storeManagementSecurityModal {
+  width: min(650px, 94vw);
+  padding: 39px 40px 35px;
+  border-radius: 20px;
+  background: #ffffff;
+  box-shadow: 0 25px 75px rgba(23, 22, 67, 0.25);
+  animation: storeManagementModalPop 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.storeManagementSecurityIcon {
+  width: 78px;
+  height: 78px;
+  margin: 0 auto 17px;
+  border-radius: 50%;
+  background: #f0efff;
+  color: #4435bb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.storeManagementSecurityIcon svg {
+  font-size: 39px;
+}
+
+.storeManagementSecurityTitle {
+  margin-bottom: 8px;
+  color: #25262d;
+  font-size: 31px;
+  font-weight: 800;
+  text-align: center;
+  letter-spacing: -0.6px;
+}
+
+.storeManagementSecuritySubtitle {
+  max-width: 540px;
+  margin: 0 auto 26px;
+  color: #92939d;
+  font-size: 14px;
+  line-height: 1.7;
+  font-weight: 500;
+  text-align: center;
+}
+
+.storeManagementInfoBox {
+  min-height: 88px;
+  margin-bottom: 27px;
+  padding: 17px 18px;
+  border: 1px solid #dce2ff;
+  border-radius: 13px;
+  background: #f1f4ff;
+  color: #5d6195;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 13px;
+  line-height: 1.65;
+  font-weight: 600;
+}
+
+.storeManagementInfoBox svg {
+  margin-top: 2px;
+  color: #5650bc;
+  font-size: 21px;
+  flex-shrink: 0;
+}
+
+.storeManagementSecurityField {
+  margin-bottom: 28px;
+}
+
+.storeManagementSecurityInputWrapper {
+  width: 100%;
+  height: 58px;
+  border: 1px solid #dedee6;
+  border-radius: 10px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.storeManagementSecurityInputWrapper:focus-within {
+  border-color: #5c54ce;
+  box-shadow: 0 0 0 4px rgba(84, 76, 203, 0.08);
+}
+
+.storeManagementSecurityInputError {
+  border-color: #d85454;
+}
+
+.storeManagementSecurityInputError:focus-within {
+  border-color: #d85454;
+  box-shadow: 0 0 0 4px rgba(216, 84, 84, 0.08);
+}
+
+.storeManagementSecurityInputIcon {
+  margin-left: 16px;
+  margin-right: 10px;
+  color: #858691;
+  font-size: 22px !important;
+}
+
+.storeManagementSecurityInput {
+  width: 100%;
+  height: 100%;
+  padding: 0 8px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #2c2d35;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.storeManagementSecurityInput::placeholder {
+  color: #b1b1b9;
+  font-weight: 500;
+}
+
+.storeManagementSecurityEyeButton {
+  width: 45px;
+  height: 100%;
+  margin-right: 3px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #858691;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.storeManagementSecurityEyeButton svg {
+  font-size: 22px;
+}
+
+.storeManagementSecurityEyeButton:hover {
+  color: #4a43a8;
+}
+
+.storeManagementValidationError {
+  margin-top: 8px;
+  color: #d14e4e;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.storeManagementValidationError svg {
+  font-size: 17px;
+}
+
+.storeManagementSecurityActions {
+  display: grid;
+  grid-template-columns: 0.75fr 1.4fr;
+  gap: 12px;
+}
+
+.storeManagementConfirmButton {
+  min-height: 53px;
+  border: 0;
+  border-radius: 9px;
+  background: linear-gradient(135deg, #4535d9, #397ce9);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 800;
+  box-shadow: 0 9px 21px rgba(63, 55, 210, 0.2);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.storeManagementConfirmButton svg {
+  font-size: 21px;
+  transition: transform 0.25s ease;
+}
+
+.storeManagementConfirmButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 13px 27px rgba(63, 55, 210, 0.28);
+}
+
+.storeManagementConfirmButton:hover svg {
+  transform: translateX(4px);
+}
+
+.storeManagementToast {
+  width: min(420px, calc(100vw - 30px));
+  min-height: 76px;
+  padding: 13px 14px;
+  border: 1px solid #e7e6ed;
+  border-radius: 13px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  position: fixed;
+  top: 25px;
+  right: 25px;
+  z-index: 2000;
+  box-shadow: 0 17px 45px rgba(31, 29, 82, 0.17);
+  animation: storeManagementToastIn 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.storeManagementToastSuccess {
+  border-left: 4px solid #28a878;
+}
+
+.storeManagementToastError {
+  border-left: 4px solid #d85252;
+}
+
+.storeManagementToastIcon {
+  width: 39px;
+  height: 39px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.storeManagementToastSuccess .storeManagementToastIcon {
+  background: #e8f9f1;
+  color: #219267;
+}
+
+.storeManagementToastError .storeManagementToastIcon {
+  background: #fff0f0;
+  color: #cf5151;
+}
+
+.storeManagementToastIcon svg {
+  font-size: 22px;
+}
+
+.storeManagementToastContent {
+  min-width: 0;
+  flex: 1;
+}
+
+.storeManagementToastTitle {
+  margin-bottom: 2px;
+  color: #292a32;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.storeManagementToastMessage {
+  color: #757680;
+  font-size: 12px;
+  line-height: 1.45;
+  font-weight: 500;
+}
+
+.storeManagementToastClose {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: #858691;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.storeManagementToastClose svg {
+  font-size: 18px;
+}
+
+.storeManagementToastClose:hover {
+  background: #f1f1f5;
+  color: #383943;
+}
+
+@keyframes storeManagementSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes storeManagementSkeletonShimmer {
+  0% {
+    left: -55%;
+  }
+
+  100% {
+    left: 110%;
+  }
+}
+
+@keyframes storeManagementCardAppear {
+  0% {
+    opacity: 0;
+    transform: translateY(22px) scale(0.98);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes storeManagementStatusPulse {
+  0% {
+    box-shadow: 0 0 0 0 currentColor;
+    opacity: 1;
+  }
+
+  70% {
+    box-shadow: 0 0 0 5px transparent;
+    opacity: 0.8;
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+    opacity: 1;
+  }
+}
+
+@keyframes storeManagementOverlayIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes storeManagementDrawerFromRight {
+  0% {
+    transform: translateX(100%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes storeManagementModalPop {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.96);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes storeManagementToastIn {
+  0% {
+    opacity: 0;
+    transform: translateX(70px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes storeManagementFadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.storeManagementDrawerContent::-webkit-scrollbar,
+.storeManagementDetailsModal::-webkit-scrollbar {
+  width: 6px;
+}
+
+.storeManagementDrawerContent::-webkit-scrollbar-track,
+.storeManagementDetailsModal::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.storeManagementDrawerContent::-webkit-scrollbar-thumb,
+.storeManagementDetailsModal::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: #d7d6e1;
+}
+
+.storeManagementDrawerContent::-webkit-scrollbar-thumb:hover,
+.storeManagementDetailsModal::-webkit-scrollbar-thumb:hover {
+  background: #aaa8bb;
+}

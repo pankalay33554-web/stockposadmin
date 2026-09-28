@@ -1,0 +1,225 @@
+.online-features-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  box-sizing: border-box;
+  background: rgba(15, 23, 42, 0.48);
+  backdrop-filter: blur(3px);
+  animation: onlineFeaturesOverlayShow 0.25s ease forwards;
+}
+
+.online-features-modal {
+  width: 100%;
+  max-width: 1050px;
+  max-height: 90vh;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 25px 70px rgba(15, 23, 42, 0.28);
+  animation: onlineFeaturesModalShow 0.35s ease forwards;
+}
+
+.online-features-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 70px;
+  padding: 0 25px;
+  box-sizing: border-box;
+  background: #078ac7;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.online-features-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.online-features-header-icon {
+  flex-shrink: 0;
+  color: #ffffff;
+  font-size: 29px !important;
+}
+
+.online-features-header-title {
+  overflow: hidden;
+  color: #ffffff;
+  font-size: 23px;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.online-features-close-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: #ffffff;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.online-features-close-button:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: rotate(90deg);
+}
+
+.online-features-close-icon {
+  font-size: 29px !important;
+}
+
+.online-features-content {
+  max-height: calc(90vh - 70px);
+  overflow-y: auto;
+  padding: 42px 45px 40px;
+  box-sizing: border-box;
+}
+
+.online-features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 65px;
+  row-gap: 30px;
+}
+
+.online-feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  min-width: 0;
+  animation: onlineFeatureItemShow 0.45s ease both;
+}
+
+.online-feature-item:nth-child(1) {
+  animation-delay: 0.05s;
+}
+
+.online-feature-item:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.online-feature-item:nth-child(3) {
+  animation-delay: 0.15s;
+}
+
+.online-feature-item:nth-child(4) {
+  animation-delay: 0.2s;
+}
+
+.online-feature-item:nth-child(5) {
+  animation-delay: 0.25s;
+}
+
+.online-feature-item:nth-child(6) {
+  animation-delay: 0.3s;
+}
+
+.online-feature-item:nth-child(7) {
+  animation-delay: 0.35s;
+}
+
+.online-feature-item:nth-child(8) {
+  animation-delay: 0.4s;
+}
+
+.online-feature-check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  margin-top: 2px;
+  border-radius: 50%;
+  background: #21c58b;
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(33, 197, 139, 0.2);
+}
+
+.online-feature-check .MuiSvgIcon-root {
+  font-size: 20px;
+}
+
+.online-feature-info {
+  min-width: 0;
+}
+
+.online-feature-title {
+  margin-bottom: 7px;
+  color: #4d78bd;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.online-feature-description {
+  max-width: 390px;
+  color: #555b66;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.65;
+}
+
+.online-features-content::-webkit-scrollbar {
+  width: 7px;
+}
+
+.online-features-content::-webkit-scrollbar-track {
+  background: #f4f5f7;
+}
+
+.online-features-content::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: #c9cdd5;
+}
+
+.online-features-content::-webkit-scrollbar-thumb:hover {
+  background: #adb2bd;
+}
+
+@keyframes onlineFeaturesOverlayShow {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes onlineFeaturesModalShow {
+  from {
+    opacity: 0;
+    transform: translateY(25px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes onlineFeatureItemShow {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
